@@ -4,7 +4,9 @@ reload(sys)
 sys.setdefaultencoding('utf-8')
 
 def add_url():
-    url = raw_input('Please input the download link\n')
+    if sys.argv[1]==None:
+        url = raw_input('Please input the download link\n')
+    url = sys.argv[1]
     return url,'url' if url[:4]=='http' else 'magnet'
 
 def add_header(dtype):
@@ -44,7 +46,7 @@ def page_header():
             'Content-Type': 'application/x-www-form-urlencoded',
             'X-Requested-With': 'XMLHttpRequest',
             'Referer': 'http://dynamic.cloud.vip.xunlei.com/user_task?userid=122159693&st=4',
-            'Cookie': ',
+            'Cookie': '',
             'Connection': 'keep-alive',
             }
     return headers
@@ -145,8 +147,8 @@ if __name__ =='__main__':
         lst = paPattern.findall(req.content)
         args = argPattern.findall(req.content)
         num = 0
-        for itm in args[0].split(','):
-            print str(num) + ' . ' + itm
+        for itm1,itm2 in zip(args[0].split(','),args[1].split(',')):
+            print str(num) + ' . ' + itm1 + ' ' + itm2
             num += 1
         select = raw_input('select the files(default all):\n').split(',')
         upurl = 'http://dynamic.cloud.vip.xunlei.com/interface/bt_task_commit?'
